@@ -44,7 +44,7 @@ export default {
     return h("div", { tId: 1 }, [
       h("p", {}, "主页"),
       // h(PatchChildren),
-      h(NextTicker),
+      // h(NextTicker),
     ]);
   },
 };

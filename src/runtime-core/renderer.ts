@@ -30,10 +30,10 @@ function patch(n1, n2, container = null) {
     default:
       // 这里就基于 shapeFlag 来处理
       if (shapeFlag & ShapeFlags.ELEMENT) {
-        console.log("处理 element");
+        console.log("———— 处理 element ————");
         processElement(n1, n2, container);
       } else if (shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
-        console.log("处理 component");
+        console.log("———— 处理 component ————");
         processComponent(n1, n2, container);
       }
   }
@@ -41,9 +41,10 @@ function patch(n1, n2, container = null) {
 
 function processElement(n1, n2, container) {
   if (!n1) {
+    // 首次的渲染
     mountElement(n2, container);
   } else {
-    // todo
+    // todo, 真正的 diff
     updateElement(n1, n2, container);
   }
 }
@@ -260,7 +261,7 @@ function mountElement(vnode, container) {
     //     return h("div",{},"test")
     // }
     // 这里 children 就是 test ，只需要渲染一下就完事了
-    console.log(`处理文本:${vnode.children}`);
+    console.log(`———— 处理文本:${vnode.children} ————`);
     hostSetElementText(el, vnode.children);
   } else if (shapeFlag & ShapeFlags.ARRAY_CHILDREN) {
     // 举个栗子
@@ -285,18 +286,18 @@ function mountElement(vnode, container) {
 
   // todo
   // 触发 beforeMount() 钩子
-  console.log("vnodeHook  -> onVnodeBeforeMount");
-  console.log("DirectiveHook  -> beforeMount");
-  console.log("transition  -> beforeEnter");
+  // console.log("vnodeHook  -> onVnodeBeforeMount");
+  // console.log("DirectiveHook  -> beforeMount");
+  // console.log("transition  -> beforeEnter");
 
   // 插入
   hostInsert(el, container);
 
   // todo
   // 触发 mounted() 钩子
-  console.log("vnodeHook  -> onVnodeMounted");
-  console.log("DirectiveHook  -> mounted");
-  console.log("transition  -> enter");
+  // console.log("vnodeHook  -> onVnodeMounted");
+  // console.log("DirectiveHook  -> mounted");
+  // console.log("transition  -> enter");
 }
 
 function mountChildren(children, container) {
@@ -331,7 +332,8 @@ function mountComponent(initialVNode, container) {
   const instance = (initialVNode.component = createComponentInstance(
     initialVNode
   ));
-  console.log(`创建组件实例:${instance.type.name}`);
+  
+  console.log(`%c创建组件实例: %s`, 'color: #65c294;font-weight: bold;', `:${instance.type.name}`)
   // 2. 给 instance 加工加工
   setupComponent(instance);
 
